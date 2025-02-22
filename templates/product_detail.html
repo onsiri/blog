@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Item List</h1>
+<table>
+    <thead>
+        <tr>
+            <th>UserId</th>
+            <th>TransactionId</th>
+            <th>TransactionTime</th>
+            <th>ItemCode</th>
+            <th>ItemDescription</th>
+            <th>NumberOfItemsPurchased</th>
+            <th>CostPerItem</th>
+            <th>Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in page_obj %}
+        <tr>
+            <td>{{ item.UserId }}</td>
+            <td>{{ item.TransactionId }}</td>
+            <td>{{ item.TransactionTime }}</td>
+            <td>{{ item.ItemCode }}</td>
+            <td>{{ item.ItemDescription }}</td>
+        <td>{{ item.NumberOfItemsPurchased }}</td>
+            <td>{{ item.CostPerItem }}</td>
+            <td>{{ item.Country }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        <span class="page-numbers">
+            {% with page_range=page_obj.paginator.page_range %}
+                {% if page_obj.number <= 3 %}
+                    {% for num in page_range|slice:":5" %}
+                        {% if page_obj.number == num %}
+                            <span class="current">{{ num }}</span>
+                        {% else %}
+                            <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_range|length > 5 %}
+                        <span>...</span>
+                        <a href="?page={{ page_range|last }}">{{ page_range|last }}</a>
+                    {% endif %}
+                {% elif page_obj.number > 3 and page_obj.number < page_range|length|add:-2 %}
+                    <a href="?page=1">1</a>
+                    <span>...</span>
+                    {% for num in page_range %}
+                        {% if num > page_obj.number|add:-2 and num < page_obj.number|add:2 %}
+                            {% if page_obj.number == num %}
+                                <span class="current">{{ num }}</span>
+                            {% else %}
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <span>...</span>
+                    <a href="?page={{ page_range|last }}">{{ page_range|last }}</a>
+                {% else %}
+                    <a href="?page=1">1</a>
+                    <span>...</span>
+                    {% for num in page_range|slice:"5:" %}
+                        {% if page_obj.number == num %}
+                            <span class="current">{{ num }}</span>
+                        {% else %}
+                            <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+{% endblock content %}

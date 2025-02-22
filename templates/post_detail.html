@@ -1,9 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="post-entry">
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.body }}</p>
-</div>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            border-bottom: 1px solid black;
+        }
+
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+<table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
 {% endblock content %}
 
