@@ -47,9 +47,7 @@ body {
     border-bottom: none;
 }
 
-.sidebar-menu li:hover {
-    background-color: #444;
-}
+
 
 /* Divided bar styles */
 .divided-bar {
